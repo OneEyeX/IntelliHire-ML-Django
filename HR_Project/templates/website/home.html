@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% block content %}
+    <section>
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="cntainer-fluid py-5">
+                <h2 class="display-5 fw-bold">IntelliHire: Get Hired Quickly</h2>
+                <p class="col-md-8 fs-5 mt-3">
+                    All available jobs
+                </p>
+                <div class="card">
+                    <div class="card-body">
+                        <form class="row gy-2 gx-3 align-items-center" method="GET">
+                            {% csrf_token %}
+
+                            <div class="col-sm-3">
+                                <label for="autoSizingInput" >Job name</label>
+                                {% render_field filter.form.title class="form-control" id="autoSizingInput" placeholder="Job name" %}
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label for="autoSizingSelect" >Select location</label>
+                                {% render_field filter.form.state class="form-select" id="autoSizingSelect" %}
+                                
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <label for="autoSizingSelect2" >Choose a job type</label>
+                                {% render_field filter.form.job_type class="form-select" id="autoSizingSelect2" %}
+                                
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <label for="autoSizingSelect3" >Choose an Industry</label>
+                                {% render_field filter.form.industry class="form-select" id="autoSizingSelect3" %}
+                            </div> 
+                            <div class="col-sm-3">
+                                <br>
+                                <button type="submit" class="btn  w-100 btn-primary">Search</button>
+                            </div>
+                        </form>
+                        <br>
+                        <a href="{% url 'job-listing' %}" class="btn btn-secondary">View More jobs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        {% if filter %}
+            {% for job in filter.qs %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{job.title}}</h5>
+                            <p class="card-text">Job Industry: {{job.industry}}</p>
+                            <p class="card-text">Job Type: {{job.job_type}}</p>
+                            <p class="card-text">Job City: {{job.city}}</p>
+                            <!-- <p class="card-text">Job State: {{job.state}}</p> -->
+                            <!-- <p class="card-text">Salary: {{job.salary|intcomma}}</p> -->
+                            <p class="card-text">Posted by: {{job.company}}</p>
+                            <a href="{% url 'job-details' job.pk %}" class="btn btn-primary btn-sm">View Details</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Added at {{job.timestamp|naturaltime}}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}

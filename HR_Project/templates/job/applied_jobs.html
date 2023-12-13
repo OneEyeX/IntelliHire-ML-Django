@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card mx-auto" style="width: 76rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Applied Jobs</h5>
+            {% if jobs %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Job title</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Salary (TND)</th>
+                        <th scope="col">Industry</th>
+                        <th scope="col">Application Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for job in jobs %}
+                            <tr>
+                                <td>{{job.job.title}}</td>
+                                <td>{{job.job.city}}, {{job.job.state}} </td>
+                                <td>{{job.job.salary}}</td>
+                                <!-- <td class="d-flex justify-content-between"> -->
+                                <td>    
+                                    {{job.job.industry}}
+                                </td>
+                                <td>
+                                    {{job.status}}
+                                </td>
+                                <td>
+                                    <small>
+                                        <a href="{% url 'job-details' job.job.pk %}" class="btn btn-sm btn-success"> View Job</a>
+                                    </small>
+                                </td>
+                                <!-- <td><a href="#"><small>Update job</small></a></td> -->
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <center>
+                    <h3 class="card-title mb-3">No Jobs Applications yet</h3>
+                </center>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

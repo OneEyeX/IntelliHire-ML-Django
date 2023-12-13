@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+ 
+    <div class="card mx-auto" style="width: 76rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">List of recommended job</h5>
+            <!-- { for table in tables %} -->
+                {{ tables|safe }}
+            <!-- { endfor %} -->
+            <!-- <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Salary</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for table in tables %}
+                        <tr>
+                            <td>{{applicant.user.resume.first_name}}</td>
+                            <td>{{applicant.user.resume.surname}}</td>
+                            <td>{{applicant.user.resume.location}}</td>
+                            <td>{{applicant.user.resume.job_title}}</td>
+                            <td>{{applicant.timestamp|naturalday}}</td>
+                            
+                            <td><a href="#"><small>Download Resume</small></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> -->
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card mx-auto" style="width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Create a Resume</h5>
+                     
+                    <form  method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="floatingInput">First Name</label>
+                            {% render_field form.first_name class="form-control" value=fname %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="floatingInput">Surname</label>
+                            {% render_field form.surname class="form-control" value=sname %}
+                        </div>
+                            
+                        <div class="mb-3">
+                            <label for="floatingInput">Phone Number</label>
+                            {% render_field form.phone_number class="form-control" value=phone_number %}
+                        </div>     
+                        <script>
+                            document.getElementsByName('skills').value = '{{skills_list}}';
+                        </script>
+                        <div class="mb-3">
+                            <label for="floatingInput">Skills List</label>
+                            {% if skills_list %}
+                            <br>
+                            <b>Suggested Skills based on the CV</b><br>
+                            <p>
+                                {{skills_list}}
+                            </p><br>
+                                
+                            {% endif %}
+                            {% render_field form.skills class="form-control" id="skills" style="resize: auto;" value=skills_list %}
+                            
+                            <!-- <textarea name="skills" class="form-control" style="resize: auto;">{{skills_list}}</textarea> -->
+                        </div>     
+
+                        <div class="mb-3">
+                            <label for="floatingInput">Location</label>
+                            {% render_field form.location class="form-control" value=loc %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="floatingInput">Job Title</label>
+                            {% render_field form.job_title class="form-control"  %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="floatingInput">Upload Resume</label>
+                            {% render_field form.upload_resume class="form-control" value=filename %}
+                            <br>
+                            <!-- <button class="w-100 btn btn-sm btn-secondary" type="submit">Extract Infos</button> -->
+                            <!-- <input type="button" value="Extract" class="w-100 btn btn-sm btn-secondary"> -->
+                            <button name="extract" value="extract" class="w-100 btn btn-sm btn-secondary" type="submit">Extract Infos from CV</button>
+                        </div>
+                        
+                        <hr>
+                        <button name="submit" value="submit" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

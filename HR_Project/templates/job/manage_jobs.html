@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card mx-auto" style="width: 76rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Manage Jobs</h5>
+            {% if jobs %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Job title</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Salary (TND)</th>
+                        <th scope="col">N° of Applicants</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for job in jobs %}
+                            <tr>
+                                <td>{{job.title}}</td>
+                                <td>{{job.city}}, {{job.state}} </td>
+                                <td>{{job.salary}}</td>
+                                <td class="d-flex justify-content-between">
+                                    {{job.applyjob_set.all.count}}
+                                    <small>
+                                        <a href="{% url 'all-applicants' job.pk %}" class="btn btn-sm btn-success"> View All</a>
+                                    </small> 
+                                </td>
+                                <td>
+                                    {% if job.is_available %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-warning ">Not Active</span>
+                                    {% endif %}
+                                </td>
+                                <td><a href="{% url 'update-job' job.pk %}"><small>Update job</small></a></td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <center>
+                    <h3 class="card-title mb-3">No Jobs Ads published yet</h3>
+                </center>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
